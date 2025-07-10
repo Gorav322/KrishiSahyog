@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield, Temperature, and Rainfall Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            margin-bottom: 20px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #34495e;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .results h2 {
+            color: #2980b9;
+        }
+        .results img {
+            max-width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Aakashvaani: Crop and Climate Forecast</h1>
+    
+    <form id="forecast-form">
+        <label for="crop_name" aria-placeholder="Choose Crop">Crop Name:</label>
+        <select id="crop_name" name="crop_name" required>
+            <option value="bajra">Bajra</option>
+            <option value="barley">Barley</option>
+            <option value="gram">Gram</option>
+            <option value="jowar">Jowar</option>
+            <option value="wheat">Wheat</option>
+            <option value="rice">Rice</option>
+            <option value="urad">Urad</option>
+            <option value="tur">Tur</option>
+            <option value="lentil">Lentil</option>
+            <option value="maize">Maize</option>
+            <option value="moong">Moong</option>
+            <option value="kharif cc">Kharif CC</option>
+            <option value="kharif cereals">Kharif Cereals</option>
+            <option value="kharif foodgrains">Kharif Foodgrains</option>
+            <option value="kharif pulses">Kharif Pulses</option>
+            <option value="rabi cc">Rabi CC</option>
+            <option value="rabi cereals">Rabi Cereals</option>
+            <option value="rabi foodgrains">Rabi Foodgrains</option>
+            <option value="rabi pulses">Rabi Pulses</option>
+            <option value="ragi">Ragi</option>
+            <option value="total cc">Total CC</option>
+            <option value="small millets">Small Millets</option>
+            <option value="total cereals">Total Cereals</option>
+            <option value="total foodgrains">Total Foodgrains</option>
+            <option value="total pulses">Total Pulses</option>
+        </select>
+
+        <label for="state_name">State Name:</label>
+        <input type="text" id="state_name" name="state_name" required>
+
+        <label for="area">Area (in hectares):</label>
+        <input type="number" id="area" name="area" required>
+
+        <input type="submit" value="Get Forecasts">
+    </form>
+
+    <div class="results">
+        <h2>Crop Yield Predictions:</h2>
+        <div id="crop-yield-results"></div>
+        
+        <h2>Temperature Forecast:</h2>
+        <div id="temperature-results"></div>
+
+        <h2>Rainfall Forecast:</h2>
+        <div id="rainfall-results"></div>
+    </div>
+
+    <script>
+        document.getElementById('forecast-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const cropName = document.getElementById('crop_name').value;
+            const stateName = document.getElementById('state_name').value;
+            const area = document.getElementById('area').value;
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    crop_name: cropName,
+                    state_name: stateName,
+                    area: area
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const cropYieldDiv = document.getElementById('crop-yield-results');
+                if (data.error) {
+                    cropYieldDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                } else {
+                    cropYieldDiv.innerHTML = `<table>
+                        <tr>
+                            <th>Season</th>
+                            <th>Predicted Yield (Quintals)</th>
+                        </tr>
+                        ${Object.entries(data.predictions).map(([season, yieldValue]) => `
+                            <tr>
+                                <td>${season}</td>
+                                <td>${yieldValue}</td>
+                            </tr>
+                        `).join('')}
+                    </table>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching crop yield predictions:', error);
+                const cropYieldDiv = document.getElementById('crop-yield-results');
+                cropYieldDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            });
+
+            // Fetch temperature forecasts
+            fetch('/temperature_forecast', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    state_name: stateName
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const temperatureDiv = document.getElementById('temperature-results');
+                if (data.error) {
+                    temperatureDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                } else {
+                    const minTempData = data.forecast.Min || {};
+                    const meanTempData = data.forecast.Mean || {};
+                    const maxTempData = data.forecast.Max || {};
+
+                    // Create separate tables for each temperature type
+                    temperatureDiv.innerHTML = `
+                        <h3>Min Temperature Forecast</h3>
+                        <table>
+                            <tr>
+                                <th>Year</th>
+                                <th>Min Temp (°C)</th>
+                            </tr>
+                            ${Object.entries(minTempData).map(([year, value]) => `
+                                <tr>
+                                    <td>${year}</td>
+                                    <td>${value}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+
+                        <h3>Mean Temperature Forecast</h3>
+                        <table>
+                            <tr>
+                                <th>Year</th>
+                                <th>Mean Temp (°C)</th>
+                            </tr>
+                            ${Object.entries(meanTempData).map(([year, value]) => `
+                                <tr>
+                                    <td>${year}</td>
+                                    <td>${value}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+
+                        <h3>Max Temperature Forecast</h3>
+                        <table>
+                            <tr>
+                                <th>Year</th>
+                                <th>Max Temp (°C)</th>
+                            </tr>
+                            ${Object.entries(maxTempData).map(([year, value]) => `
+                                <tr>
+                                    <td>${year}</td>
+                                    <td>${value}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+
+                        <div>${data.images.join('')}</div> <!-- Include images in the results -->
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching temperature forecasts:', error);
+                const temperatureDiv = document.getElementById('temperature-results');
+                temperatureDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            });
+
+            // Fetch rainfall forecasts
+            fetch('/rainfall_forecast', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    state_name: stateName
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const rainfallDiv = document.getElementById('rainfall-results');
+                if (data.error) {
+                    rainfallDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                } else {
+                    rainfallDiv.innerHTML = `<table>
+                        <tr>
+                            <th>Year</th>
+                            <th>Predicted Rainfall (mm)</th>
+                            <th>Classification</th>
+                            <th>Recommendation</th>
+                        </tr>
+                        ${Object.entries(data.forecast).map(([year, forecast]) => `
+                            <tr>
+                                <td>${year}</td>
+                                <td>${forecast.rainfall}</td>
+                                <td>${forecast.classification}</td>
+                                <td>${forecast.recommendation}</td>
+                            </tr>
+                        `).join('')}
+                    </table>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching rainfall forecasts:', error);
+                const rainfallDiv = document.getElementById('rainfall-results');
+                rainfallDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            });
+        });
+    </script>
+
+</body>
+</html>

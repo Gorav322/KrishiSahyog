@@ -1,0 +1,143 @@
+/* Styling for general images */
+img {
+    height: auto;
+    width: auto;
+}
+
+/* Styling for horizontal rule */
+hr {
+    height: 5px;
+    background-color: black;
+    border: none;
+}
+
+/* Container for the main image */
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Styling for the main image */
+.image-container img {
+    width: 100%;
+    height: auto;
+}
+
+/* Navbar styling with transparency and fixed positioning */
+/* Navbar styling with a new background color */
+.navbar {
+    background-color: #004d00; /* Example solid color, change as needed */
+    padding: 15px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 22px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 0 0 8px 8px;
+    z-index: 10;
+    transition: background-color 0.3s;
+}
+
+/* Increase size of main image */
+.image-container img.ii {
+    width: 140%; /* Increase the width as needed */
+    height: 80% !important;
+}
+
+
+/* Styling for navigation links */
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar ul li {
+    margin: 0 40px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* New styles for home icon */
+.nav-home-icon {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+/* About Us Section */
+#about-us {
+    padding: 20px;
+    margin-top: 80px; /* Ensure it's visible below the navbar */
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-text {
+    width: 60%;
+    font-size: 18px;
+    color: #555;
+}
+
+.about-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Contact Us Section */
+#contact-us {
+    padding: 20px;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-details {
+    text-align: center;
+}
+
+.contact-image-left, .contact-image-right {
+    width: 150px;
+    height: 150px;
+}
+
+.contact-image-left img, .contact-image-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+/* General styling */
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+}

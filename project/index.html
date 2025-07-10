@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiSahyog</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const stateSelect = document.getElementById("state");
+            const districtSelect = document.getElementById("district");
+
+            // Example state-district mapping (you should replace this with your own data)
+            const stateDistricts = {
+                "Andhra Pradesh": ["ANAKAPALLI","BAPATLA","COASTAL A. P. & YANAM","DR B R AMBEDKAR KONASEEMA","EAST GODAVARI","ELURU","GUNTUR","KAKINADA","KRISHNA","NTR DISTRICT","PALNADU","PARVATHIPURAM MANYAM","PRAKASAM","SPSR NELLORE","SRI ALLURI SITHARAMARAJU DISTRICT","SRIKAKULAM","VISHAKHAPATNAM","VIZIANAGARAM","WEST GODAVARI","YANAM","RAYALASEEMA","ANANTAPURAMU","ANNAMAYYA DISTRICT","CHITTOOR","KURNOOL","NANDYAL","SRI SATHYASAI DISTRICT","TIRUPATI","YSR DISTRICT"],
+                "Telangana": ["ADILABAD","B. KOTHAGUDEM","HANUMAKONDA","HYDERABAD","J. BHUPALPALLY","JAGTIAL","JANGAON","JOGULAMBA GADWA","KAMAREDDY","KARIMNAGAR","KHAMMAM","KUMARAM BHEEM","M. MALKAJGIRI","MAHABUBABAD","MAHABUBNAGAR","MANCHERIAL","MEDAK","MULUGU","NAGARKURNOOL","NALGONDA","NARAYANPET","NIRMAL","NIZAMABAD","PEDDAPALLE","RAJANNA SIRCILLA","RANGAREDDY","SANGAREDDY","SIDDIPET","SURYAPET","VIKARABAD","WANAPARTHY","WARANGAL","Y. BHUVANAGIRI"],
+                "Maharashtra": ["MUMBAI CITY","MUMBAI SUBURBAN","PALGHAR","RAIGAD","RATNAGIRI","SINDHUDURG","THANE","AHMEDNAGAR","JALGAON","KOLHAPUR","NASHIK","PUNE","SANGLI","SATARA","SHOLAPUR","MARATHWADA","LATUR","NANDED","VIDARBHA","NAGPUR","YEOTMAL"],
+                "Andaman & Nicobar Islands":["NICOBAR","NORTH & MIDDLE ANDAMAN","SOUTH ANDAMAN"],
+                "Arunachal Pradesh":["ANJAW","CHANGLANG","DIBANG VALLEY","EAST KAMENG","EAST SIANG","KURUNG KUMEY","LOHIT","LOWER DIBANG VALLEY","LOWER SUBANSIRI","PAPUMPARA","TAWANG","TIRAP","UPPER SIANG","UPPER SUBANSIRI","WEST KAMENG","WEST SIANG"],
+                "ASSAM":["BAKSA","BARPETA","BONGAIGAON","CACHAR","CHIRANG","DARRANG","DHEMAJI","DHUBRI","DIBRUGARH","DIMA HASAO","GOALPARA","GOLAGHAT","HAILAKANDI","JORHAT","KAMRUP (RURAL)","KAMRUP METRO","KARBI ANGLONG","KARIMGANJ","KOKRAJHAR","LAKHIMPUR","MORIGAON","NAGAON"],
+                "MEGHALAYA":["EAST GARO HILLS","EAST JAINTIA HILLS","EAST KHASI HILLS","NORTH GARO HILLS","RI-BHOI","SOUTH GARO HILLS","SOUTH WEST GARO HILLS"],
+                "NAGALAND":["DIMAPUR","KIPHIRE","KOHIMA","LONGLENG","MOKOKCHUNG","MON","PAREN","PHEK","TUENSANG"],
+                "MANIPUR":["BISHNUPUR","CHANDEL","CHURACHANDPUR","IMPHAL EAST","IMPHAL WEST","TAMENGLONG","UKHRUL"],
+                "MIZORAM":["AIZWAL","CHAMPHAI","KOLASIB","LAWNGTLAI","LUNGLEI","MAMIT","SAIHA","SERCHHIP"],
+                "TRIPURA":["DHALAI","GOMATI","KHOWAI","NORTH TRIPURA","SIPAHIJALA","SOUTH TRIPURA","UNAKOTI","WEST TRIPURA"],
+                "SIKKIM":["GANGTOK","GYALSHING","MANGAN","NAMCHI","PAKYONG","SORENG"],
+                "WEST BENGAL":["ALIPURDUAR","COOCH BEHAR","DARJEELING","JALPAIGURI","KALIMPONG","MALDA","NORTH DINAJPUR","SOUTH DINAJPUR","BANKURA","BIRBHUM","EAST MIDNAPORE","HOOGHLY","HOWRAH","JHARGRAM","KOLKATA","WEST MIDNAPORE"],
+                "ODISHA":["ANGUL","BALASORE","BARGARH","BHADRAK","BOLANGIR","BOUDHGARH","CUTTACK","DEOGARH","DHENKANAL"],
+                "JHARKHAND":["BOKARO","CHATRA","DEOGHAR","DHANBAD","DUMKA","EAST SINGBHUM","GARHWA","GIRIDIH","GODDA","GUMLA","JAMTARA","LATEHAR","RAMGARH","RANCHI","WEST SINGBHUM"],
+                "BIHAR":["ARARIA","ARWAL","AURANGABAD","BANKA","BEGUSARAI","BHABUA","BHAGALPUR","BHOJPUR","BUXAR","EAST CHAMPARAN","NALANDA","PATNA","SHEOHAR","VAISHALI"],
+                "UTTAR PRADESH":["AMBEDKAR NAGAR","AMETHI","AYODHYA","AZAMGARH","BALLIA","BALRAMPUR","BANDA","GORAKHPUR","JAUNPUR","KANPUR CITY","KANPUR DEHAT","LUCKNOW","MAHARAJGANJ","PRAYAGRAJ","AGRA","ALIGARH","AMROHA","GHAZIABAD","HATHRAS","JHANSI","MAINPURI","MEERUT","RAMPUR","SAMBHAL","SHAMLI"],
+                "UTTARAKHAND":["ALMORA","BAGESHWAR","CHAMOLI","CHAMPAWAT","DEHRADUN","GARHWAL PAURI","GARHWAL TEHRI","NAINITAL","RUDRAPRAYAG","UTTARKASHI"],
+                "HARYANA":["AMBALA","BHIWANI","CHARKHI DADRI","FARIDABAD","FATEHABAD","GURGAON","HISAR","JHAJJAR","JIND","KAITHAL","KARNAL","KURUKSHETRA","MAHENDRAGARH","NUH","PALWAL","PANCHKULA","PANIPAT","REWARI","ROHTAK"],
+                "CHANDIGARH (UT)":[],
+                "DELHI":["CENTRAL DELHI","EAST DELHI","NEW DELHI","NORTH DELHI","NORTH EAST DELHI","NORTH WEST DELHI","SOUTH DELHI","SOUTH WEST DELHI"],
+                "PUNJAB":["AMRITSAR","BARNALA","BHATINDA","FARIDKOT","FATEHGARH SAHIB","FAZILKA","FEROZEPUR","GURDASPUR","HOSHIARPUR","JALANDHAR","KAPURTHALA","LUDHIANA","RUPNAGAR"],
+                "HIMACHAL PRADESH":["BILASPUR","CHAMBA","HAMIRPUR","KANGRA","KINNAUR","KULLU","LAHAUL & SPITI","MANDI","SHIMLA","SIRMAUR","SOLAN"],
+                "JAMMU & KASHMIR(UT)":["ANANTNAG","BADGAM","BANDIPORE","BARAMULA","DODA","GANDERBAL","JAMMU","KATHUA","KULGAM","KUPWARA","POONCH","PULWAMA","RAJOURI","RAMBAN","REASI","SAMBA","SHOPIAN","SRINAGAR","UDHAMPUR"],
+                "LADAKH(UT)":["KARGIL","LADAKH (LEH)"],
+                "RAJASTHAN":["AJMER","ALWAR","BANSWARA","BARAN","BHARATPUR","BHILWARA","BUNDI","CHITTORGARH","DAUSA","DHOLPUR","DUNGARPUR","JAIPUR","JHALAWAR","JHUNJHUNU","KARAULI","KOTA","PRATAPGARH","UDAIPUR","BIKANER","HANUMANGARH","JAISALMER","JODHPUR","NAGAUR","PALI","SRI GANGANAGAR"],
+                "MADHYA PRADESH":["ANUPPUR","BALAGHAT","CHHATARPUR","CHHINDWARA","DAMOH","DINDORI","JABALPUR","PANNA","GWALIOR","AGAR-MALWA","BHOPAL","INDORE","KHANDWA","RATLAM","SEHORE","UJJAIN"],
+                "GUJARAT":["AHMEDABAD","ARAVALLI","BANASKANTHA","CHHOTA UDEPUR","DADARA & NAGAR HAVELI","DAHOD","KHEDA","PANCHMAHAL","SURAT","VADODARA","VALSAD","SAURASHTRA & KUTCH","JAMNAGAR","PORBANDAR","RAJKOT"],
+                "GOA":["NORTH GOA","SOUTH GOA"],
+                "CHHATTISGARH":["BALOD","BALRAMPUR","BEMETARA","BILASPUR","BIJAPUR","DANTEWADA","GARIABAND","JASHPUR","MUNGELI","RAIGARH","RAIPUR","SARANGARH-BILAIGARH","SURAJPUR"],
+                "TAMILNADU":["ARIYALUR","CHENGALPATTU","CHENNAI","COIMBATORE","CUDDALORE","DHARMAPURI","DINDIGUL","ERODE","KALLAKURICHI","KANCHEEPURAM","KANYAKUMARI","KARUR","KRISHNAGIRI","MADURAI","MAYILADUTHURAI","NAGAPATTINAM","NAMAKKAL","NILGIRIS","PERAMBALUR","PUDUKKOTTAI","RAMANATHAPURAM","RANIPET","SALEM","SIVAGANGA","TENKASI","THANJAVUR","THENI","TIRUNELVELI","TIRUPATTUR","TIRUPPUR","TIRUVALLUR","TIRUVANNAMALAI","TIRUVARUR","TOOTHUKUDI","TRICHY","VELLORE","VILLUPURAM","VIRUDHUNAGAR"],
+                "PUDUCHERRY (UT)":["KARAIKAL","MAHE","PUDUCHERRY","YANAM"],
+                "KARNATAKA":["COASTAL KARNATAKA","DAKSHINA KANNADA","UDUPI","UTTARA KANNADA","N. I. KARNATAKA","BAGALKOTE","BELAGAVI","BIDAR","DHARWAD","GADAG","HAVERI","KALABURGI","KOPPAL","RAICHUR","VIJAYAPURA","YADGIR","BALLARI","BENGALURU RURAL","BENGALURU URBAN","CHAMARAJANAGAR","RAMANAGARA","VIJAYANAGARA"],
+                "KERALA":["ALAPUZHA","CANNUR","ERNAKULAM","KOLLAM","KOTTAYAM","KOZHIKODE","MALAPPURAM","THIRUVANANTHAPURAM","WYNAD"],
+                "LAKSHADWEEP":[]
+                // Add more states and their districts here
+            };
+
+            // Populate state dropdown
+            for (const state in stateDistricts) {
+                const option = document.createElement("option");
+                option.value = state;
+                option.textContent = state;
+                stateSelect.appendChild(option);
+            }
+
+            // Update district dropdown based on selected state
+            stateSelect.addEventListener("change", function() {
+                const selectedState = stateSelect.value;
+                const districts = stateDistricts[selectedState] || [];
+                
+                // Clear previous districts
+                districtSelect.innerHTML = "";
+
+                // Populate district dropdown
+                districts.forEach(function(district) {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="title">
+                <h1>
+                    KRISHISAHY
+                   <img src="2lTg2p7ubOtsd7m5fXz8W2ECu9t.svg" alt="waterwheel" class="waterwheel-icon" >
+                    G
+                </h1>
+            </div>
+        </div>
+        <div class="right-section">
+            <form action="mainpage.html" method="GET">
+                <h2>Login</h2>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <br>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <label for="state">State</label>
+                <select id="state" name="state" required>
+                    <option value="">Select State</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <br>
+                <label for="district">District</label>
+                <select id="district" name="district" required>
+                    <option value="">Select District</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+                <br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

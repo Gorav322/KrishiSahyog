@@ -1,0 +1,26 @@
+Sl. No.,Crops,Commodity,Variety,2000-01,2017-18,2023-24
+1,Kharif Crops,Paddy,Common,510,1550,2183
+2,Kharif Crops,Paddy,Grade 'A',540,1590,2203
+3,Kharif Crops,Jowar,NA,445,1700,3180
+4,Kharif Crops,Bajra,NA,445,1425,2500
+5,Kharif Crops,Ragi,NA,445,1900,3846
+6,Kharif Crops,Maize,NA,445,1425,2090
+7,Kharif Crops,Arhar (Tur),NA,1200,5450,7000
+8,Kharif Crops,Moong,NA,1200,5575,8558
+9,Kharif Crops,Urad,NA,1200,5400,6950
+10,Kharif Crops,Cotton,Medium Staple,1625,4020,6620
+11,Kharif Crops,Cotton,Long Staple,1825,4320,7020
+12,Kharif Crops,Groundnut,NA,1220,4450,6377
+13,Kharif Crops,Sunflower Seed,NA,1170,4100,6760
+14,Kharif Crops,Soyabean,Yellow,865,3050,4600
+15,Kharif Crops,Sesamum,NA,1300,5300,8635
+16,Kharif Crops,Nigerseed,NA,1025,4050,7734
+17,Rabi Crops,Wheat,NA,610,1735,2125
+18,Rabi Crops,Barley,NA,500,1410,1735
+19,Rabi Crops,Gram,NA,1100,4400,5335
+20,Rabi Crops,Masur (Lentil),NA,1200,4250,6000
+21,Rabi Crops,Rapeseed/ Mustard,NA,1200,4000,5450
+22,Rabi Crops,Safflower,NA,1200,4100,5650
+23,Other Crops,Copra,Milling,3250,6500,10860
+24,Other Crops,Copra,Ball,3500,6785,11750
+25,Other Crops,Jute,NA,785,3500,5050

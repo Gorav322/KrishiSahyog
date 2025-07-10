@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Prediction</title>
+    <script>
+        async function submitForm(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            const stateName = document.getElementById('state_name').value;
+            const landSize = document.getElementById('land_size').value;
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ state_name: stateName, land_size: landSize })
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h1>Crop Prediction</h1>
+    <form onsubmit="submitForm(event)">
+        <label for="state_name">State Name:</label>
+        <input type="text" id="state_name" name="state_name" required><br><br>
+
+        <label for="land_size">Land Size (in acres):</label>
+        <input type="number" id="land_size" name="land_size" required><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+    <h2>Prediction Result:</h2>
+    <pre id="result"></pre>
+</body>
+</html>

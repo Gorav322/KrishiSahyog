@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samachar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("last.jpg"); /* Relative path */
+            background-size: cover; /* Ensures the image covers the entire screen */
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Overlay for opacity */
+        .background-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* 40% opacity black overlay */
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            padding-top: 80px; /* Added padding to push header content down */
+        }
+
+        section {
+            background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+            padding: 20px;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            min-height: calc(100vh - 160px); /* Adjusts section height relative to viewport */
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            position: relative; /* Changes position so footer doesn't overlap */
+            margin-top: 20px;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .important-news {
+            background: url('button.jpg') no-repeat center center; /* Replace with your image URL */
+            background-size: cover; /* Ensure the image covers the entire section */
+            color: white; /* Text color for contrast */
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px auto;
+            width: 60%; /* Adjusted width */
+            max-width: 900px; /* Restricts maximum width */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Subtle shadow to lift the button */
+            border: 2px solid #fff; /* Border color */
+            position: relative; /* To position the pseudo-elements */
+            overflow: hidden; /* Ensures the pseudo-elements stay within the box */
+            cursor: pointer; /* Change cursor to pointer */
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+            min-height: 50px; /* Fixed minimum height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px; /* Added margin to ensure space below header */
+        }
+
+        .important-news:hover {
+            transform: scale(1.05); /* Slightly enlarge the button on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Increase shadow on hover */
+        }
+
+        .important-news::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+            pointer-events: none; /* Ensures it doesn't interfere with content */
+        }
+
+        /* Include the same navbar styles here to maintain consistency */
+        .navbar {
+            background-color: #004d00; /* Same color as the main page */
+            padding: 15px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            font-size: 22px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 0 0 8px 8px;
+            z-index: 10;
+            transition: background-color 0.3s;
+        }
+
+        .navbar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .navbar ul li {
+            margin: 0 40px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .navbar ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* New styles for home icon */
+        .nav-home-icon {
+            width: 50px !important;
+            height: 50px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background overlay for opacity -->
+    <div class="background-overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <ul>
+            <!-- Home image link -->
+            <li><a href="./mainpage.html"><img src="farming.png" alt="Home" class="nav-home-icon"></a></li>
+            <li><a href="./mainpage.html">About Us</a></li>
+            <li><a href="./samachar.html">Samachar</a></li>
+            <li><a href="http://127.0.0.1:5000/">Aakashvaani</a></li>
+            <li><a href="./mainpage.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>KrishiSahyog - Samachar</h1>
+    </header>
+
+    <!-- Important News Section -->
+    <section class="important-news">
+        <p>To Report Crop Loss: <a href="https://pmfby.gov.in/" target="_blank">Click here</a></p>
+    </section>
+
+    <section>
+        <h2>Fertilizer Subsidies Executive Summary</h2>
+        <p><i>Source: <a href="https://www.indiabudget.gov.in/doc/eb/sbe6.pdf" target="_blank">Fertilizer Subsidies PDF</a></i></p>
+
+        <h5>(i) Fertilizer Subsidy Allocations</h5>
+        <p>In the 2023-2024 budget, ₹175,103 crores have been allocated for fertilizer subsidies, covering both Urea and Nutrient-Based Subsidies (NBS). However, the projection for 2024-2025 indicates a significant reduction to ₹121,900 crores, signaling potential changes in subsidy structures.</p>
+
+        <h5>(ii) Nutrient-Based Subsidy (NBS)</h5>
+        <p>The allocation for Phosphatic and Potassic fertilizers under NBS is set to decrease from ₹42,222 crores in 2023-2024 to ₹18,500 crores in 2024-2025, which may impact the affordability of these key fertilizers for farmers.</p>
+
+        <h5>(iii) Support for Crop Husbandry</h5>
+        <p>The government allocated ₹44,000 crores for crop husbandry in 2023-2024, with an increase to ₹63,000 crores projected for 2024-2025, reflecting continued support for agricultural development.</p>
+        <h5>For more information visit the given link</h5>
+    </section>
+    <section>
+        <h2>Farmer Rights</h2>
+        <p><i>Source: <a href="https://vikaspedia.in/agriculture/policies-and-schemes/crops-related/protection-of-plant-varieties-and-rights-of-farmers/farmers2019-rights-in-the-ppv-fr-act-2001#:~:text=are%20as%20under%3A-,Right%201%3A%20Access%20to%20seed%20%26%20other%20propagating%20material,rights%20of%20farmers%20and%20breeders" target="_blank">Farmer Rights PDF</a></i></p>
+
+        <h5>Right 1: Access to Seed & Other Propagating Material</h5>
+        <p>Farmers have the right to access seeds and other propagating materials from a variety of sources, including government schemes and private sector innovations. This right ensures that farmers can select and grow crops suited to their local conditions and needs.</p>
+
+        <h5>Right 2: Seed Replacement & Fair Pricing</h5>
+        <p>Farmers are entitled to fair prices for seeds and the opportunity to replace defective seeds. This right aims to protect farmers from financial losses due to substandard seeds and promotes transparency in seed pricing.</p>
+
+        <h5>Right 3: Fair Compensation for Seed Patents</h5>
+        <p>Farmers should receive fair compensation if their traditional knowledge or locally adapted varieties are used in new seed patents. This right ensures that farmers benefit from their contributions to agricultural innovation and knowledge.</p>
+        <h5>For more information visit the given link</h5>
+    </section>
+    <section>
+        <h2>Subsidy Eligibility and Access</h2>
+        <p><i>Source: <a href="https://agri.and.nic.in/loan.htm#:~:text=Individual%20farmers%2FCo%2Doperative%20Societies,matching%20implements%20including%20one%20trailer.&text=100%25%20transport%20subsidy%20is%20provided%20by%20the%20department.&text=The%20Progressive%20Farmer%2FCooperative%20Societies,of%20land%20in%20his%20ownership." target="_blank">agri.in</a></i></p>
+        <h5> Soil Conservation Loans</h5>
+        <p>As per the approved pattern of assistance the soil conservation works are undertaken up the holding of the individual cultivators on loan-cum-subsidy basis. 50% of the cost is treated as subsidy after completion of 5 years and the balance 50% of the loan amount is payable in 15 annual equal installment alongwith the interest acquired thereof. The maximum ceiling of expenditure per ha. has been fixed amount equivalent Rs. 14000/-. Rate of Interest 8.75% </p>
+        <h5>Under Minor Irrigation Scheme</h5>
+        <p>The selected farmers are directed to start the work under the technical supervision of the Departmental Officials.
+            After the completion of work in all respect 1/3rd cost of the Minor Irrigation Pond, are handed over to the farmers as subsidy.
+            In normal condition the scheme is completed within 105 days. The Progressive Farmer  should possess 1- hectare of land in his ownership. 
+
+            The Farmer should have water source in the form of Nallah/Pond/Well near his plot 
+      
+            The land in should be free from all incumbance and have clear title of ownership with detailed survey particulars, in order to avail subsidy on pumpset.
+        </p>
+       <h5>Excavation of ponds on loan cum subsidy</h5>
+       <p>The name of the selected farmers are forwarded to the concerned bank for sanction of loan component being the 2/3rd cost of the Minor Irrigation Pond.
+
+          On sanction of subsidy by the Administration the subsidy amount is handed over to Banks.
+  
+          Total  cost of pond is paid to the beneficiaries in three equal installments.  
+  
+          1st installment at the time of sanction of loan-cum-subsidy by the concerned bank,
+  
+         2nd installment after the 50% completion of the work
+  
+         3rd installment after the completion of the work in all respect.
+  
+         In normal condition the scheme takes about 150 days for completion. 
+        </p>
+        <h5>For more information visit the given link</h5>
+    </section>
+    <footer>
+        <p>&copy; 2024 KrishiSahyog. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+</head>
+<body>
+    <h1>Prediction Results</h1>
+    {% if predictions %}
+        <ul>
+            {% for crop, seasons in predictions.items() %}
+                <li><strong>{{ crop }}</strong>
+                    <ul>
+                        {% for season, yield in seasons.items() %}
+                            <li>{{ season }}: {{ yield }}</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No predictions available for the given input.</p>
+    {% endif %}
+    <a href="/">Go Back</a>
+</body>
+</html>
