@@ -16,3 +16,9 @@
 - **HTML/CSS/JS** – for frontend interface  
 - **Pickle** – for model serialization  
 - **Git** – version control
+
+## Way to Use
+- First run the train_models.py
+- Then run the app.py for smooth prediction of the crops,temperature and rainfall
+- In the Templates folder open the mainpage.html for the mainpage of the website and can glance the other pages
+  
